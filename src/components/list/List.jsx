@@ -115,6 +115,7 @@ const List = () => {
                     <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
                         <input
                             type="text"
+                            autoFocus
                             value={text} onChange={(e) => setText(e.target.value)}
                             placeholder="Todo's Title"
                             className="w-full p-2 bg-gray-700 rounded-md text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
