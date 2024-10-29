@@ -5,8 +5,22 @@ import 'react-calendar/dist/Calendar.css';
 import { FaRegTrashAlt } from "react-icons/fa";
 import "./List.css";
 import { v4 as uuidv4 } from 'uuid';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import apple from "../../assets/apple.mp3"
 
 const List = () => {
+    const notify = () =>
+    toast('⚡ Added', {
+        position: "bottom-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
     const [date, setDate] = useState(new Date());
     const handleDateChange = (newDate) => {
         setDate(newDate);
@@ -28,6 +42,7 @@ const List = () => {
             time: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
         setData([...data, newTodos]);
+        notify()
         setText("");
         closeHolder();
     };
@@ -41,8 +56,13 @@ const List = () => {
         setIsVisible(false);
     };
 
+    const handleDelete = (id)=>{
+        setData(data.filter(item=> item.id !== id))
+    }
+
     return (
         <main className='h-[100vh]'>
+            <ToastContainer/>
             <div className="bg-[rgb(38,38,38)] bg-opacity-100 text-white w-[13rem] h-full fixed px-5 py-3 flex flex-col gap-4">
                 <div className="flex items-center gap-3 text-3xl font-semibold">
                     <BsLightningChargeFill className='text-yellow-400' />
@@ -73,7 +93,9 @@ const List = () => {
                                 <p className="text-sm text-gray-500 text-left">{item.time}</p>
                             </div>
                             <div>
-                                <FaRegTrashAlt className='text-white cursor-pointer' />
+                                <button onClick={()=> handleDelete(item.id)}>
+                                    <FaRegTrashAlt className='text-white cursor-pointer' />
+                                </button>
                             </div>
                         </div>
                     ))}
